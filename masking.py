@@ -16,7 +16,7 @@ def flatten_json(json_obj):
         "masked_device_id": mask_pii(json_obj.get("device_id")),
         "locale": json_obj.get("locale"),
         "app_version": json_obj.get("app_version"),
-        "create_date": json_obj.get("create_date")  # Use get method to handle missing field
+        "create_date": json_obj.get("create_date")  
     }
     return flattened_data
 
@@ -57,19 +57,19 @@ def consume_messages(queue_url):
     while True:
         response = sqs.receive_message(
             QueueUrl=queue_url,
-            MaxNumberOfMessages=10  # Fetch up to 10 messages at once
+            MaxNumberOfMessages=10  
         )
         messages = response.get('Messages', [])
         if not messages:
             print("No more messages in the queue. Exiting...")
-            break  # No more messages in the queue, exit the loop
+            break 
         processed_records = []
         for message in messages:
             body = message['Body']
             data = json.loads(body)
             flattened_data = flatten_json(data)
             processed_records.append(flattened_data)
-            # Delete the message from the queue after processing
+            
             sqs.delete_message(
                 QueueUrl=queue_url,
                 ReceiptHandle=message['ReceiptHandle']
@@ -80,7 +80,7 @@ def consume_messages(queue_url):
     print("Message consumption completed.")
 
 def main():
-    queue_url = 'http://localhost:4566/000000000000/login-queue'  # Replace with your queue URL
+    queue_url = 'http://localhost:4566/000000000000/login-queue'  
     consume_messages(queue_url)
     print("ETL process completed.")
 
