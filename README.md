@@ -41,3 +41,7 @@ Further Steps for Production
 Assumptions
 - The SQS queue and PostgreSQL table schemas are predefined and do not change frequently.
 - Data volume is manageable within the constraints of the local setup for testing.
+
+
+
+Refer Key_decisions_points.docx for decision pointers and input optput validation screenshots
