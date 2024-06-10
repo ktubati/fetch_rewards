@@ -28,6 +28,20 @@ Setup
 6. Verify PostgreSQL table:
    psql -d postgres -U postgres -p 5432 -h localhost -W
    SELECT * FROM user_logins;
+
+PostgreSQL Table Schema
+The user_logins table has been created with the following schema. Note that the app_version column is of type varchar to accommodate version strings such as 1.2.3.
+
+CREATE TABLE IF NOT EXISTS user_logins(
+    user_id varchar(128),
+    device_type varchar(32),
+    masked_ip varchar(256),
+    masked_device_id varchar(256),
+    locale varchar(32),
+    app_version varchar(32),  -- Changed from integer to varchar to accommodate version strings
+    create_date date
+);
+
 Running the ETL Process
 Run the ETL script:
 python masking.py
